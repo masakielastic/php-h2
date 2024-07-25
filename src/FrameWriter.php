@@ -2,8 +2,18 @@
 
 namespace h2;
 
-class FrameWriter {
+class FrameWriter implements \IteratorAggregate {
     public $buffer = "";
+    public $list = [];
+
+    function public getIterator():
+    {
+        $index = 0;
+        foreach ($this as $index => $frame) {
+            yield $frame;
+            ++$index;
+        }
+    }
 
     function writeHeadersFrame(int $streamId, array $headers, array $flags = [])
     {
