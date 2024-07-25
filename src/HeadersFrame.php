@@ -46,9 +46,4 @@ class HeadersFrame extends Frame {
         $flag = pack("c", $flag);
         $this->bytes = $payloadLength.$type.$flag.$stream.$payload;
     }
-
-    public function getBytes(): string
-    {
-        return $this->bytes;
-    }
 }
