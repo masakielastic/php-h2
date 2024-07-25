@@ -1,0 +1,21 @@
+{
+    "name": "masakielastic/h2",
+    "description": "HTTP/2 library",
+    "keywords": ["HTTP/2"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Masaki Kagaya",
+            "homepage": "https://github.com/masakielastic",
+            "email": "masakielastic@gmail.com"
+        },
+    ],
+    "require": {
+        "php": ">=8.1",
+    },
+   "autoload": {
+        "psr-4": {
+            "h2\\": "src/"
+        }
+    }
+}
