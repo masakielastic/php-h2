@@ -4,8 +4,8 @@ namespace h2;
 use h2\FrameType::HEADERS;
 
 class HeadersFrame extends Frame {
-    const int FLAG_END_STREAM = 0x1;
-    const int FLAG_END_HEADERS = 0x4;
+    const int FLAG_END_STREAM = 0x01;
+    const int FLAG_END_HEADERS = 0x04;
 
     string $bytes;
 
