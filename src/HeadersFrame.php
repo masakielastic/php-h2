@@ -1,15 +1,15 @@
 <?php
 
 namespace h2;
-use h2\FrameType::HEADERS;
+
+use h2\Frame;
+use h2\FrameType;
 
 class HeadersFrame extends Frame {
     const int FLAG_END_STREAM = 0x01;
     const int FLAG_END_HEADERS = 0x04;
 
-    string $bytes;
-
-    public __construct(int $streamId, array $headers, array $flags = [])
+    public function __construct(int $streamId, array $headers, array $flags = [])
     {
         $stream = match(true) {
             0x100 > $streamId => "\x00\x00\x00",
@@ -44,10 +44,10 @@ class HeadersFrame extends Frame {
 
         $type = chr(FrameType::HEADERS);
         $flag = pack("c", $flag);
-        $this->bytes = $payloadLength.$type.$frag.$stream.$payload;
+        $this->bytes = $payloadLength.$type.$flag.$stream.$payload;
     }
 
-    public getBytes(): string
+    public function getBytes(): string
     {
         return $this->bytes;
     }
