@@ -3,10 +3,15 @@
 namespace h2;
 
 class Frame {
-    string $bytes;
+    private $bytes;
 
-    public static function fromBytes(string $bytes)
+    function getBytes(): string
     {
-        $this->$bytes = $bytes
+        return $this->bytes;
+    }
+
+    function fromBytes(string $bytes)
+    {
+        $this->bytes = $bytes;
     }
 }
