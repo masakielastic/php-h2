@@ -2,7 +2,7 @@
 
 namespace h2;
 
-class FrameReader implements \IteratorAggregate {
+class FrameParser implements \IteratorAggregate {
 
     public function __construct(readonly string $src)
     {
