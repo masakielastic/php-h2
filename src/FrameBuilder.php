@@ -4,7 +4,7 @@ namespace h2;
 
 use h2\DataFrame;
 
-class FrameWriter implements \IteratorAggregate {
+class FrameBuilder implements \IteratorAggregate {
     public $bytes = "";
     public $frames = [];
 
