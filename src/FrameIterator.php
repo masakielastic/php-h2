@@ -17,7 +17,7 @@ class FrameIterator implements \IteratorAggregate {
     {
         $iter = new FrameByteIterator($this->bytes);
 
-        foreach ( as $index => $chunk) {
+        foreach ($iter as $index => $chunk) {
             yield $index => $this->buildFrame($chunk);
         }
     }
