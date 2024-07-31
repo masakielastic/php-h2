@@ -12,12 +12,12 @@ class HeadersFrame extends Frame {
 
     public static function fromRawHeaders(array $headers, int $streamId, array $flags = []): static
     {
-        $payload = static::payloadFromRawHeaders($headers);
+        $payload = static::getPayloadFromRawHeaders($headers);
         $header = static::frameHeader(strlen($payload), 0x1, $streamId, $flags);
         return new static($header.$payload);
     }
 
-    protected static function payloadFromRawHeaders(array $headers): string
+    protected static function getPayloadFromRawHeaders(array $headers): string
     {
         $payload = '';
 
