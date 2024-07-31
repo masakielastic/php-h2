@@ -1,6 +1,7 @@
 <?php
 
 namespace h2;
+use h2\FrameByteIterator;
 use h2\Frame;
 use h2\DataFrame;
 use h2\HeadersFrame;
@@ -14,28 +15,10 @@ class FrameIterator implements \IteratorAggregate {
 
     public function getIterator(): \Generator
     {
-        foreach ($this->getByteIterator() as $index => $bytes) {
-            yield $index => $this->buildFrame($bytes);
-        }
-    }
+        $iter = new FrameByteIterator($this->bytes);
 
-    public function getByteIterator(): \Generator
-    {
-        $bytesSize = strlen($this->bytes);
-        $index = 0;
-        $current = 0;
-        $next = 0;
-
-        while (true) {
-            if ($next >= $bytesSize) {
-                break;
-            }
-
-            $size = hexdec(bin2hex(substr($this->bytes, $next, 3))) + 9;
-            $next += $size;
-            yield $index => substr($this->bytes, $current, $size);
-            $current = $next;
-            ++$index;
+        foreach ( as $index => $chunk) {
+            yield $index => $this->buildFrame($chunk);
         }
     }
 
