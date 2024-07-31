@@ -4,27 +4,27 @@ namespace h2;
 
 class FrameParser implements \IteratorAggregate {
 
-    public function __construct(readonly string $src)
+    public function __construct(private string $bytes)
     {
     }
 
     public function getIterator(): \Generator
     {
-        $chunk_size = \strlen($this->src);
+        $bytesSize = strlen($this->bytes);
         $index = 0;
+        $current = 0;
         $next = 0;
 
         while (true) {
-            if ($next > $chunk_size || $next + 3 > $chunk_size) {
+            if ($next >= $bytesSize) {
                 break;
             }
 
-            $size = \hexdec(\bin2hex(\substr($this->src, $next, 3))) + 9;
+            $size = hexdec(bin2hex(substr($this->bytes, $next, 3))) + 9;
             $next += $size;
-
-            yield $index => $next;
+            yield $index => substr($this->bytes, $current, $size);
+            $current = $next;
             ++$index;
         }
     }
-
 }
