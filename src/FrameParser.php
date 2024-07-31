@@ -2,6 +2,9 @@
 
 namespace h2;
 use h2\Frame;
+use h2\DataFrame;
+use h2\HeadersFrame;
+use h2\SettingsFrame;
 
 class FrameParser implements \IteratorAggregate {
 
@@ -29,8 +32,15 @@ class FrameParser implements \IteratorAggregate {
         }
     }
 
-    public function buildFrame(string $chunk)
+    private function buildFrame(string $chunk)
     {
-        return new Frame($chunk);
+        $type = ord(substr($chunk, 3, 1));
+
+        return match ($type) {
+            0x0 => new DataFrame($chunk),
+            0x1 => new HeadersFrame($chunk),
+            0x4 => new SettingsFrame($chunk),
+            default => new Frame($chunk)
+        };
     }
 }
