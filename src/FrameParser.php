@@ -31,6 +31,6 @@ class FrameParser implements \IteratorAggregate {
 
     public function buildFrame(string $chunk)
     {
-        new Frame($chunk);
+        return new Frame($chunk);
     }
 }
