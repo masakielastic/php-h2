@@ -1,6 +1,7 @@
 <?php
 
 namespace h2;
+use h2\Frame;
 
 class FrameParser implements \IteratorAggregate {
 
@@ -22,9 +23,14 @@ class FrameParser implements \IteratorAggregate {
 
             $size = hexdec(bin2hex(substr($this->bytes, $next, 3))) + 9;
             $next += $size;
-            yield $index => substr($this->bytes, $current, $size);
+            yield $index => $this->buildFrame(substr($this->bytes, $current, $size));
             $current = $next;
             ++$index;
         }
+    }
+
+    public function buildFrame(string $chunk)
+    {
+        new Frame($chunk);
     }
 }
