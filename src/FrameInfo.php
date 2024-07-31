@@ -1,29 +1,32 @@
 <?php
 
 namespace h2;
+use h2\FrameHeader;
 
 class FrameInfo {
 
-    private $byte;
+    private $frameHeader;
+    private $payload;
 
     public function __construct(string $bytes)
     {
-        $this->bytes = $bytes;
+        $this->frameHeader = new FrameHeader(substr($bytes, 0, 9));
+        $this->payload = substr($bytes, 9);
     }
 
 
     public function getLength()
     {
-        return hexdec(bin2hex(substr($this->bytes, 0, 3)));
+        return $frameHeader->getLength();
     }
 
     public function getType()
     {
-        return ord(substr($this->bytes, 3, 1));
+        return $frameHeader->getType();
     }
 
      public function getFlag()
      {
-         return ord(substr($this->bytes, 4, 1));
+         return $frameHeader->getFlag();
      }
 }
