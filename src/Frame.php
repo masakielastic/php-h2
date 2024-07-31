@@ -28,9 +28,9 @@ class Frame {
         return $this->frameHeader->getFlag();
     }
 
-    public function getPayload():string
+    public function getPayload(): string
     {
-        return $this->getpayload;
+        return $this->payload;
     }
 
     public function getBytes(): string
