@@ -15,6 +15,13 @@ class FrameTest extends TestCase {
         $this->assertSame($expect, $ret);
     }
 
+    public function testAck()
+    {
+        $ret = SettingsFrame::from([Flags::SettingsAck])->getBytes();
+        $expect = "\x00\x00\x00\x04\x01\x00\x00\x00\x00";
+        $this->assertSame($expect, $ret);
+    }
+
     public function testHeadersFrame()
     {
         $streamId = 0x01;
