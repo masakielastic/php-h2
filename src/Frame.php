@@ -22,7 +22,7 @@ class Frame {
 
     public function getFlag(): int
     {
-        return return hexdec(bin2hex(substr($this->bytes, 4, 1)));
+        return hexdec(bin2hex(substr($this->bytes, 4, 1)));
     }
 
     public function getPayload(): string
