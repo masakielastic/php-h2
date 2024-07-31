@@ -14,6 +14,13 @@ class FrameParser implements \IteratorAggregate {
 
     public function getIterator(): \Generator
     {
+        foreach ($this->getByteIterator() as $index => $bytes) {
+            yield $index => $this->buildFrame($bytes);
+        }
+    }
+
+    public function getByteIterator(): \Generator
+    {
         $bytesSize = strlen($this->bytes);
         $index = 0;
         $current = 0;
@@ -26,7 +33,7 @@ class FrameParser implements \IteratorAggregate {
 
             $size = hexdec(bin2hex(substr($this->bytes, $next, 3))) + 9;
             $next += $size;
-            yield $index => $this->buildFrame(substr($this->bytes, $current, $size));
+            yield $index => substr($this->bytes, $current, $size);
             $current = $next;
             ++$index;
         }
