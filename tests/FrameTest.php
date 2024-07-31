@@ -18,7 +18,7 @@ class FrameTest extends TestCase {
 
     public function testAck()
     {
-        $ret = SettingsFrame::from([Flags::SettingsAck])->getBytes();
+        $ret = SettingsFrame::from([Flags::SETTINGS_ACK])->getBytes();
         $expect = "\x00\x00\x00\x04\x01\x00\x00\x00\x00";
         $this->assertSame($expect, $ret);
     }
@@ -34,8 +34,8 @@ class FrameTest extends TestCase {
         ];
 
         $flags = [
-            Flags::HeadersEndStream,
-            Flags::HeadersEndHeaders
+            Flags::HEADERS_END_STREAM,
+            Flags::HEADERS_END_HEADERS
        ];
 
         $frame = HeadersFrame::fromRawHeaders($headers, $streamId, $flags);

@@ -20,13 +20,13 @@ class FrameIteratorTest extends TestCase {
         ];
 
         $flags = [
-            Flags::HeadersEndStream,
-            Flags::HeadersEndHeaders
+            Flags::HEADERS_END_STREAM,
+            Flags::HEADERS_END_HEADERS
         ];
 
         $ret = [
             'settings' => SettingsFrame::from()->getBytes(),
-            'ack' => SettingsFrame::from([Flags::SettingsAck])->getBytes(),
+            'ack' => SettingsFrame::from([Flags::SETTINGS_ACK])->getBytes(),
             'headers' => HeadersFrame::fromRawHeaders($headers, 0x1, $flags)->getBytes()
         ];
 
