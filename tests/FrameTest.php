@@ -4,9 +4,17 @@ namespace h2\Test;
 
 use PHPUnit\Framework\TestCase;
 use h2\HeadersFrame;
+use h2\SettingsFrame;
 use h2\Flags;
 
 class FrameTest extends TestCase {
+    public function testSettingsFrame()
+    {
+        $ret = SettingsFrame::from()->getBytes();
+        $expect = "\x00\x00\x00\x04\x00\x00\x00\x00\x00";
+        $this->assertSame($expect, $ret);
+    }
+
     public function testHeadersFrame()
     {
         $streamId = 0x01;
