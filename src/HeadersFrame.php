@@ -17,7 +17,7 @@ class HeadersFrame extends Frame {
         return new static($header.$payload);
     }
 
-    private static function payloadFromRawHeaders(array $headers): string
+    protected static function payloadFromRawHeaders(array $headers): string
     {
         $payload = '';
 
