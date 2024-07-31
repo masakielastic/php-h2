@@ -1,40 +1,76 @@
 <?php
 
 namespace h2;
-use h2\frameHeader;
 
 class Frame {
-    private $frameHeader;
-    private $payload;
+    private $bytes;
 
     public function __construct(string $bytes)
     {
-        $this->frameHeader = new FrameHeader(substr($bytes, 0, 9));
-        $this->payload = substr($bytes, 9);
+        $this->bytes = $bytes;
     }
 
     public function getLength(): int
     {
-        return $this->frameHeader->getLength();
+        return hexdec(bin2hex(substr($this->bytes, 0, 3)));
     }
 
     public function getType(): int
     {
-        return $this->frameHeader->getType();
+        return hexdec(bin2hex(substr($this->bytes, 3, 1)));
     }
 
     public function getFlag(): int
     {
-        return $this->frameHeader->getFlag();
+        return return hexdec(bin2hex(substr($this->bytes, 4, 1)));
     }
 
     public function getPayload(): string
     {
-        return $this->payload;
+        return substr($this->bytes, 9);
     }
 
     public function getBytes(): string
     {
-        return $this->frameHeader->getBytes().$this->getPayload();
+        return $this->bytes;
+    }
+
+    private static function frameHeader(int $length, int $type, int $streamId, array $flags = []): string
+    {
+        $bytes = static::lengthString($length).chr($type).
+                 static::flagString($flags).static::idString($streamId);
+        return $bytes;
+    }
+
+    private static function lengthString(int $length): string
+    {
+        return match(true) {
+            0x100 > $length => "\x00\x00",
+            0x10000 > $length => "\x00",
+            default => ""
+        }.chr($length);
+    }
+
+    private static function flagString(array $flags): string
+    {
+        $flag = 0x0;
+
+        if (count($flags)) {
+            foreach ($flags as $value) {
+                $flag += $value;
+            }
+        }
+
+        return pack("c", $flag);
+    }
+
+    private static function idString(int $id): string
+    {
+        return match(true) {
+            0x100 > $id => "\x00\x00\x00",
+            0x10000 > $id => "\x00\x00",
+            0x1000000 > $id => "\x00",
+            default => ""
+        }.chr($id);
     }
 }
