@@ -6,7 +6,7 @@ use h2\DataFrame;
 use h2\HeadersFrame;
 use h2\SettingsFrame;
 
-class FrameParser implements \IteratorAggregate {
+class FrameIterator implements \IteratorAggregate {
 
     public function __construct(private string $bytes)
     {
