@@ -8,7 +8,7 @@ class FrameByteIterator implements \IteratorAggregate {
     {
     }
 
-    public function getByteIterator(): \Generator
+    public function getIterator(): \Generator
     {
         $bytesSize = strlen($this->bytes);
         $index = 0;
