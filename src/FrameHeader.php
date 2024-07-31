@@ -1,5 +1,7 @@
 <?php
 
+namespace h2;
+
 class FrameHeader {
 
     private $bytes;
