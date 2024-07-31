@@ -35,6 +35,11 @@ class Frame {
         return $this->bytes;
     }
 
+    public function has(int $flag): bool
+    {
+        return $this->getFlag() === $flag;
+    }
+
     protected static function frameHeader(int $length, int $type, int $streamId, array $flags = []): string
     {
         $bytes = static::lengthString($length).chr($type).

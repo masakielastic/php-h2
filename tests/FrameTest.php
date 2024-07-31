@@ -46,7 +46,8 @@ class FrameTest extends TestCase {
 
     public function testDataFrame()
     {
-        $ret = DataFrame::from("Hello\n", 0x1, [0x1])->getBytes();
+        $frame = DataFrame::from("Hello\n", 0x1, [Flags::DATA_END_STREAM]);
+        $ret = $frame->getBytes();
         $expect = "\x00\x00\x06".
                   "\x00".
                   "\x01".
@@ -54,5 +55,6 @@ class FrameTest extends TestCase {
                   "\x48\x65\x6c\x6c\x6f\x0a";
 
         $this->assertSame($expect, $ret);
+        $this->assertTrue($frame->has(Flags::DATA_END_STREAM));
     }
 }
