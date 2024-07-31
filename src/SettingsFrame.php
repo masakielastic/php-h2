@@ -1,5 +1,7 @@
 <?php
 
+namespace h2;
+
 class SettingsFrame extends Frame {
 
     public static function from(array $flags = [])
