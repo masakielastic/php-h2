@@ -5,6 +5,7 @@ namespace h2\Test;
 use PHPUnit\Framework\TestCase;
 use h2\HeadersFrame;
 use h2\SettingsFrame;
+use h2\FrameIterator;
 use h2\Flags;
 
 class FrameIteratorTest extends TestCase {
@@ -34,15 +35,15 @@ class FrameIteratorTest extends TestCase {
 
     public function testFrameIterator()
     {
-        $iter = new FrameIterator(request());
+        $iter = new FrameIterator($this->request());
         $ret = [];
 
         foreach ($iter as $index => $frame) {
             $ret[] = $frame->getBytes();
         }
 
-        $this->assertSame(request('settings'), $ret[0]);
-        $this->assertSame(request('ack'), $ret[1]);
-        $this->assertSame(request('headers'), $ret[2]);
+        $this->assertSame($this->request('settings'), $ret[0]);
+        $this->assertSame($this->request('ack'), $ret[1]);
+        $this->assertSame($this->request('headers'), $ret[2]);
     }
 }
