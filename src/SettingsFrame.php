@@ -6,7 +6,7 @@ class SettingsFrame extends Frame {
 
     public static function from(array $flags = [])
     {
-        $bytes = FrameHeader::from(0x0, 0x4, 0x0, $flags)->getBytes();
+        $bytes = static::frameHeader(0x0, 0x4, 0x0, $flags);
         return new static($bytes);
     }
 }

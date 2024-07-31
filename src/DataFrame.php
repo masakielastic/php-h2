@@ -6,7 +6,7 @@ class DataFrame extends Frame {
 
     public static function from(string $data, int $streamId, array $flags = [])
     {
-        $header = FrameHeader::from(strlen($data), 0x0, $streamId, $flags)->getBytes();
+        $header = static::frameHeader(strlen($data), 0x0, $streamId, $flags);
         return new static($header.$data);
     }
 }

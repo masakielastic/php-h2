@@ -8,7 +8,7 @@ class HeadersFrame extends Frame {
     {
          $payload = static::payloadFromRawHeaders($headers);
 
-         $header = FrameHeader::from(strlen($payload), 0x1, $streamId, $flags)->getBytes();
+         $header = static::frameHeader(strlen($payload), 0x1, $streamId, $flags);
          return new static($header.$payload);
      }
 
