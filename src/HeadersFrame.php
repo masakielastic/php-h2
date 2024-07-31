@@ -4,13 +4,18 @@ namespace h2;
 
 class HeadersFrame extends Frame {
 
-    public static function from(array $headers, int $streamId, array $flags = [])
+    public static function from(string $payload, int $streamId, array $flags = []): static
     {
-         $payload = static::payloadFromRawHeaders($headers);
-
          $header = static::frameHeader(strlen($payload), 0x1, $streamId, $flags);
          return new static($header.$payload);
-     }
+    }
+
+    public static function fromRawHeaders(array $headers, int $streamId, array $flags = []): static
+    {
+        $payload = static::payloadFromRawHeaders($headers);
+        $header = static::frameHeader(strlen($payload), 0x1, $streamId, $flags);
+        return new static($header.$payload);
+    }
 
     private static function payloadFromRawHeaders(array $headers): string
     {
