@@ -1,5 +1,10 @@
 <?php
 
 class SettingsFrame extends Frame {
-    const int FLAG_ACK = 0x1;
+
+    public static function from()
+    {
+        $bytes = FrameHeader::from(0x0, 0x4, 0x0)->getBytes();
+        return new static($bytes);
+    }
 }
